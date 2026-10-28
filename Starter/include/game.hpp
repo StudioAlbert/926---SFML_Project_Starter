@@ -11,8 +11,11 @@ class Game {
 
     sf::RenderWindow window;
 
-    std::optional<sf::Sprite> cuphead;
-    sf::Texture texture;
+    std::optional<sf::Sprite> character;
+    std::optional<sf::Sprite> weapon;
+    sf::Texture char_texture_;
+    sf::Texture weapon_texture_;
+    sf::RectangleShape rect;
 
 public:
     void Initialize();
