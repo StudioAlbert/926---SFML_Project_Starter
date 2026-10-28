@@ -5,7 +5,6 @@
 int main() {
 
     Game game;
-
     game.Initialize();
     game.Loop();
 
