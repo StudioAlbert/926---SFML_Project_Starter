@@ -5,10 +5,19 @@
 #ifndef SFML_PROJECT_MASTER_GAME_HPP
 #define SFML_PROJECT_MASTER_GAME_HPP
 
+#include <SFML/Graphics.hpp>
 
 class Game {
+
+    sf::RenderWindow window;
+
+    std::optional<sf::Sprite> cuphead;
+    sf::Texture texture;
+
 public:
+    void Initialize();
     void Loop();
+
 };
 
 
