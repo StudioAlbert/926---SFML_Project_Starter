@@ -12,6 +12,9 @@ public:
     void Update();
     b2Vec2 GetPosition();
 
+    void SetVelocity(b2Vec2 vel);
+    b2Vec2 GetVelocity();
+
 };
 
 

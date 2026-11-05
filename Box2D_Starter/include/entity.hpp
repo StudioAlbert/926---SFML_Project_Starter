@@ -12,15 +12,22 @@
 
 class Entity : public sf::Drawable {
 
+    static constexpr float X_VELOCITY = 25.f;
+
     sf::RectangleShape shape;
     sf::Texture texture;
     PhysicalObject physics;
 
-    public:
+public:
     void Setup(sf::Color color, sf::Vector2f size);
     void SetupPhysics(b2WorldId &world, b2BodyType type, b2Vec2 position);
     void Update();
     void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+    void MoveLeft();
+    void MoveRight();
+    void Jump();
+    void CancelMovement();
 
 };
 

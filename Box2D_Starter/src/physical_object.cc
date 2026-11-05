@@ -35,3 +35,11 @@ void PhysicalObject::Update() {
 b2Vec2 PhysicalObject::GetPosition() {
     return b2Body_GetPosition(body_);
 }
+
+void PhysicalObject::SetVelocity(b2Vec2 vel) {
+    b2Body_SetLinearVelocity(body_, vel);
+}
+
+b2Vec2 PhysicalObject::GetVelocity() {
+    return b2Body_GetLinearVelocity(body_);
+}
