@@ -10,7 +10,7 @@
 
 int main() {
     b2WorldDef def = b2DefaultWorldDef();
-    def.gravity = {0.f, 9.81f}; // vers le bas, en m/s²
+    def.gravity = {0.f, 50.0f}; // vers le bas, en m/s²
 
     b2WorldId world_id = b2CreateWorld(&def);
 
@@ -39,6 +39,14 @@ int main() {
         dt = clock.restart().asMilliseconds();
         accumulateur_ += dt;
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Left)) {
+            mario.MoveLeft();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::Right)) {
+            mario.MoveRight();
+        }
+
+
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
@@ -46,17 +54,14 @@ int main() {
                 if (key->scancode == sf::Keyboard::Scancode::Escape) {
                     window.close();
                 }
-                if (key->scancode == sf::Keyboard::Scancode::Left) {
-                    mario.MoveLeft();
-                }
-                if (key->scancode == sf::Keyboard::Scancode::Right) {
-                    mario.MoveRight();
-                }
                 if (key->scancode == sf::Keyboard::Scancode::Space) {
                     mario.Jump();
                 }
             } else if (const auto *key = event->getIf<sf::Event::KeyReleased>()) {
-                mario.CancelMovement();
+                if (key->scancode == sf::Keyboard::Scancode::Left || key->scancode == sf::Keyboard::Scancode::Right) {
+                    mario.CancelMovement();
+                }
+
             }
         }
 

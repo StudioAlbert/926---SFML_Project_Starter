@@ -63,6 +63,10 @@ void Entity::MoveRight() {
 
 void Entity::Jump() {
     std::println("Jump");
+    if (grounded.HasTouched) {
+        float xVelocity = physics.GetVelocity().x;
+        physics.SetVelocity({xVelocity, JUMP_VELOCITY});
+    }
 }
 
 void Entity::CancelMovement() {

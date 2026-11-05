@@ -14,6 +14,7 @@
 class Entity : public sf::Drawable {
 
     static constexpr float X_VELOCITY = 25.f;
+    static constexpr float JUMP_VELOCITY = 500.f;
 
     sf::RectangleShape shape;
     sf::Texture texture;
