@@ -9,6 +9,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 
 #include "physical_object.hpp"
+#include "sensor.hpp"
 
 class Entity : public sf::Drawable {
 
@@ -17,6 +18,7 @@ class Entity : public sf::Drawable {
     sf::RectangleShape shape;
     sf::Texture texture;
     PhysicalObject physics;
+    sensor grounded;
 
 public:
     void Setup(sf::Color color, sf::Vector2f size);

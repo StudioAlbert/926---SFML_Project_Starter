@@ -1,4 +1,3 @@
-
 #include <ostream>
 #include <print>
 
@@ -16,8 +15,9 @@ void Entity::Setup(sf::Color color, sf::Vector2f size) {
 }
 
 void Entity::SetupPhysics(b2WorldId &world, b2BodyType type, b2Vec2 position) {
-
-    b2Vec2 halfSize = {Conversions::ScreenToPhysics(shape.getSize().x / 2), Conversions::ScreenToPhysics(shape.getSize().y / 2)};
+    b2Vec2 halfSize = {
+        Conversions::ScreenToPhysics(shape.getSize().x / 2), Conversions::ScreenToPhysics(shape.getSize().y / 2)
+    };
 
     physics.Setup(
         world,
@@ -25,15 +25,22 @@ void Entity::SetupPhysics(b2WorldId &world, b2BodyType type, b2Vec2 position) {
         position,
         halfSize
     );
+
+    grounded.Setup(physics.GetBodyId(), halfSize);
 }
 
 void Entity::Update() {
-
     //physics.Update();
 
     sf::Vector2f newPosition;
     newPosition.x = Conversions::PhysicsToScreen(physics.GetPosition().x);
     newPosition.y = Conversions::PhysicsToScreen(physics.GetPosition().y);
+
+    if (grounded.HasTouched) {
+        shape.setFillColor(sf::Color::Green);
+    } else {
+        shape.setFillColor(sf::Color::Red);
+    }
 
     shape.setPosition(newPosition);
 }
@@ -47,11 +54,13 @@ void Entity::MoveLeft() {
     float yVelocity = physics.GetVelocity().y;
     physics.SetVelocity({-X_VELOCITY, yVelocity});
 }
+
 void Entity::MoveRight() {
     std::println("Move Right");
     float yVelocity = physics.GetVelocity().y;
     physics.SetVelocity({X_VELOCITY, yVelocity});
 }
+
 void Entity::Jump() {
     std::println("Jump");
 }

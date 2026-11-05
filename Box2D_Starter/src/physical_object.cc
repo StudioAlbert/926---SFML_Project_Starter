@@ -16,6 +16,8 @@ void PhysicalObject::Setup(b2WorldId &world, b2BodyType type, b2Vec2 position, b
 
     shape_def_ = b2DefaultShapeDef();
     shape_def_.density = 1.0f;
+    shape_def_.isSensor = false;
+    shape_def_.enableContactEvents = false;
     shape_def_.material.friction = 0.0f;
     shape_def_.material.restitution = 0.0f;
     b2CreatePolygonShape(body_, &shape_def_, &square);
@@ -42,4 +44,8 @@ void PhysicalObject::SetVelocity(b2Vec2 vel) {
 
 b2Vec2 PhysicalObject::GetVelocity() {
     return b2Body_GetLinearVelocity(body_);
+}
+
+b2BodyId PhysicalObject::GetBodyId() {
+    return body_;
 }

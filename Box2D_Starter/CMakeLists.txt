@@ -5,6 +5,7 @@ add_executable(Box2D_Starter main.cc
         src/entity.cc
         include/constants.hpp
         src/sensor.cc
-        include/sensor.hpp)
+        include/sensor.hpp
+        include/contacts.hpp)
 
 target_link_libraries(Box2D_Starter PUBLIC SFML::Graphics SFML::Audio box2d::box2d)

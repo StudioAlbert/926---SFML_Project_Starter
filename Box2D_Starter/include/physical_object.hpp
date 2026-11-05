@@ -15,6 +15,8 @@ public:
     void SetVelocity(b2Vec2 vel);
     b2Vec2 GetVelocity();
 
+    b2BodyId GetBodyId();
+
 };
 
 
