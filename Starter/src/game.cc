@@ -7,15 +7,18 @@
 
 void Game::Initialize() {
     window.create(sf::VideoMode({800, 600}), "The Game", sf::Style::Default);
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(60);
+    //window.setVerticalSyncEnabled(true);
 
-    rect.setSize({32,32});
+    rect.setSize({3 * 96, 3 *96});
     rect.setFillColor(sf::Color::White);
     rect.setPosition({window.getSize().x / 2.f, window.getSize().y / 2.f});
     rect.setOrigin({rect.getSize().x / 2, rect.getSize().y / 2});
 
     char_texture_.loadFromFile("../../Starter/ressources/kenney_desert-shooter-pack_1.0/PNG/Players/Tiles/tile_0001.png");
     weapon_texture_.loadFromFile("../../Starter/ressources/kenney_desert-shooter-pack_1.0/PNG/Weapons/Tiles/tile_0007.png");
+    sprite_sheet_.loadFromFile("../../Starter/ressources/kenney_desert-shooter-pack_1.0/PNG/Players/Tilemap/tilemap_packed.png");
+    buffer_.loadFromFile("../../Starter/ressources/kenney_interface-sounds/Audio/drop_001.ogg");
 
     character = sf::Sprite(char_texture_);
     if (character) {
@@ -31,12 +34,23 @@ void Game::Initialize() {
         weapon->setOrigin({weapon_texture_.getSize().x / 2.f, weapon_texture_.getSize().y / 2.f});
     }
 
-    rect.setTexture(&char_texture_);
+    rect.setTexture(&sprite_sheet_);
+    rect.setTextureRect(sf::IntRect({0, 0}, {24,24}));
+
+    sound_ = sf::Sound(buffer_);
 
 }
 
 void Game::Loop() {
+
+    sf::Clock clock;
+
+
     while (window.isOpen()) {
+
+
+        const float dt = clock.restart().asSeconds();
+        //std::println("Delta Time = {}", dt);
 
         float dead_zone = 20.f;
         sf::Vector2f joystick;
@@ -55,13 +69,23 @@ void Game::Loop() {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
             } else if (const auto *key = event->getIf<sf::Event::KeyPressed>()) {
+
                 if (key->scancode == sf::Keyboard::Scancode::Escape) {
                     window.close();
                 }
+
+                if (key->scancode == sf::Keyboard::Scancode::Space) {
+                    if (sound_->getStatus() == sf::SoundSource::Status::Stopped) {
+                        sound_->play();
+                    }
+                }
+
             } else if (const auto *joystick_event = event->getIf<sf::Event::JoystickButtonPressed>()) {
                 std::println("Joystick Button Pressed {}", joystick_event->button);
+
             } else if (const auto *joystick_event = event->getIf<sf::Event::JoystickMoved>()) {
                 std::println("Joystick Axis Moved {}", static_cast<int>(joystick_event->axis));
+
             } else if (const auto *mouse_event = event->getIf<sf::Event::MouseButtonPressed>()) {
                 if (mouse_event->button == sf::Mouse::Button::Left) {
                     std::println("Left click !");
